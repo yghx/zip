@@ -1,0 +1,2 @@
+int len = in.read(chs);
+new String(chs,0,len);

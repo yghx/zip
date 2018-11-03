@@ -1,0 +1,83 @@
+mport java.util.regex.Pattern;
+
+import org.junit.Test;
+
+public class IsIntegerTest {
+	public static void main(String[] args) {
+		float f = 1.2f;
+		int i = (int) f;
+
+		double d = 3.0;
+		int j = (int) d;
+
+		// 不同类型的数是可以比较大小的
+		if (i == f) {
+			System.out.println(true);
+		}
+
+		if (j == d) {
+			System.out.println(true);
+		}
+	}
+
+	//isDigit('')->是否是数字字符
+	public static boolean isNumeric1() {
+		String str = "1.2";
+		for (int i = str.length(); --i >= 0;) {
+			if (!Character.isDigit(str.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// 方法二：搜索
+	// Java代码
+	/*
+	 * 判断是否为整数
+	 * 
+	 * @param str 传入的字符串
+	 * 
+	 * @return 是整数返回true,否则返回false
+	 */
+	
+	//正则表达式->是否全是数字(^在[]之外表示的是定界符的开始符$是结束符,[^adb]在[]里面表示的是[]里面所有的取反)
+	//【重要】[]里面表示就是或[^]表示的就是非(或的反)
+	//整数:"^[-\\+]?[\\d]*$"
+	//任意数:"^[-\\+]?[\\d]+[.]?[\\d]*$"
+	@Test
+	public void isInteger() {
+		Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+		
+		Pattern p2 = Pattern.compile("^[-\\+]?[\\d]+[.]?[\\d]*$");
+		System.out.println(p2.matcher("123.35").matches());
+		System.out.println( pattern.matcher("2343.345").matches());
+	}
+
+	// 方法三：
+	// Java代码
+	public static boolean isNumeric2(String str) {
+		Pattern pattern = Pattern.compile("[0-9]*");
+		return pattern.matcher(str).matches();
+	}
+
+	// 方法四：
+	// Java代码
+	public final static boolean isNumeric3(String s) {
+		if (s != null && !"".equals(s.trim()))
+			return s.matches("^[0-9]*$");
+		else
+			return false;
+	}
+
+	// 方法五：用ascii码
+	// Java代码
+	public static boolean isNumeric4(String str) {
+		for (int i = str.length(); --i >= 0;) {
+			int chr = str.charAt(i);
+			if (chr < 48 || chr > 57)
+				return false;
+		}
+		return true;
+	}
+}
